@@ -1,0 +1,8 @@
+<!--miniprogram/pages/home/childCpns/s-card-category/s-card-category.wxml-->
+
+<view class="card-category">
+  <block wx:for="{{categories}}" wx:key="unique">
+    <s-card-item title="{{item.title}}" iconPath="{{item.icon}}"/>
+  </block>
+</view>
+

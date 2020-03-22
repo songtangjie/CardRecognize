@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "s-card-category": "./childCpns/s-card-category/s-card-category"
+  },
+  "navigationBarTitleText": "我的卡证"
+}

@@ -1,0 +1,5 @@
+/* miniprogram/pages/home/home.wxss */
+.add-card
+{
+  margin-top: 160rpx;
+}

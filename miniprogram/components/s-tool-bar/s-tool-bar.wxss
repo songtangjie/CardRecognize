@@ -1,0 +1,29 @@
+/* miniprogram/components/s-tool-bar/s-tool-bar.wxss */
+.tool-bar
+{
+  height: 88rpx;
+  line-height: 88rpx;
+  margin: 0 60rpx;
+  border-radius: 8rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tool-bar image
+{
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.tool-bar text
+{
+  color: #fff;
+  font-size: 36rpx;
+  margin-left: 30rpx;
+}
+
+.hover
+{
+  opacity: .8;
+}

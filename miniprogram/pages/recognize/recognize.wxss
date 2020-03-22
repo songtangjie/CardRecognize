@@ -1,0 +1,5 @@
+/* pages/recognize/recognize.wxss */
+.tool-bar
+{
+  margin-top: 50rpx !important;
+}

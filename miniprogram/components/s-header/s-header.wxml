@@ -1,0 +1,5 @@
+<!--miniprogram/components/s-header/s-header.wxml-->
+<view class="header">
+  <text>{{title}}</text>
+
+</view>
