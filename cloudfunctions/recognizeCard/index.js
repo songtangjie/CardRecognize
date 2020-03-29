@@ -10,9 +10,9 @@ exports.main = async (event, context) => {
   const type = event.type;
 
   // 2.使用腾讯云AI功能进行识别(身份证验证)
-  let AppId = '1257440991'; // 腾讯云 AppId
-  let SecretId = 'AKIDRfcHm69m8DPPTDrujOozxhHbfYeU4Vdb'; // 腾讯云 SecretId
-  let SecretKey = 'KOMHwPc2GH3lQRCh6pMkvqc9SdBTaVRD'; // 腾讯云 SecretKey
+  let AppId = ''; // 腾讯云 AppId
+  let SecretId = ''; // 腾讯云 SecretId
+  let SecretKey = ''; // 腾讯云 SecretKey
 
   let imgClient = new ImageClient({ AppId, SecretId, SecretKey });
 

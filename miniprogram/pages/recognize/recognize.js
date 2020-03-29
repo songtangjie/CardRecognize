@@ -1,31 +1,21 @@
 // pages/recognize/recognize.js
-
 const idCollection = wx.cloud.database().collection("idcards");
 
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
     type: 0,
     categories: ["身份证", "银行卡"],
     idInfo: null,
     bankInfo: null
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-    this.setData({
-      type: options.type
-    })
+    this.setData({ type: options.type })
   },
 
-  //点击选择
+
+  // =================== 选择名片,并且识别信息 ====================
   selectClick: function () {
-    //用户拍照选择照片
+    // 1.让用户拍照或者选择相册
     wx.chooseImage({
       success: res => {
         const filePath = res.tempFilePaths[0];
@@ -34,13 +24,12 @@ Page({
           title: this.data.categories[this.data.type] + '识别中',
         })
 
-        //照片上传到云存储
+        // 2.将照片上传到云存储中
         this.uploadFileToCloud(filePath);
       }
     })
   },
 
-  //上传图片到云端
   uploadFileToCloud: function (filePath) {
     const timestamp = new Date().getTime();
     wx.cloud.uploadFile({
@@ -48,19 +37,20 @@ Page({
       cloudPath: `images/openid_${timestamp}.jpg`
     }).then(res => {
       const fileID = res.fileID;
-      //根据fileID换取临时url
+
+      // 3.根据fileID换取临时的URL
       this.getTempURL(fileID);
     })
   },
 
-  //获取临时url
-  getTempURL: function(fileID) {
+  getTempURL: function (fileID) {
     wx.cloud.getTempFileURL({
       fileList: [fileID]
     }).then(res => {
       const fileURL = res.fileList[0].tempFileURL;
-      //识别url
-      thie.recognizeImageURL(fileURL, fileID);
+
+      // 4.识别URL
+      this.recognizeImageURL(fileURL, fileID)
     })
   },
 
@@ -79,14 +69,11 @@ Page({
     })
   },
 
-  //处理银行卡信息
   handleBankInfo: function (res) {
     console.log(res)
   },
 
-  //处理id信息
-  handleIDInfo: function (res) {
-    //调用失败
+  handleIDInfo: function (res, fileID) {
     if (!res.result.id) {
       this.deletePhoto(fileID);
       wx.showToast({
@@ -96,7 +83,7 @@ Page({
       return;
     }
 
-    //获取信息
+    // 5.获取信息
     const result = res.result;
     const idInfo = {
       id: result.id,
@@ -105,66 +92,57 @@ Page({
       name: result.name,
       nation: result.nation,
       sex: result.sex,
-      fileID: res.fileID
+      fileID: fileID
     }
 
-    //展示信息
-    this.setData({
-      idInfo
-    })
+    // 6.展示信息
+    this.setData({ idInfo });
   },
 
-  //点击保存信息
+  // =================== 保存信息 ====================
   saveClick: function () {
     wx.showLoading({
-      title: '保存信息中',
+      title: "保存信息中",
     });
 
-
-    //查询是否已经保存过信息
+    // 查询是否已经保存过这个信息
     idCollection.where({
       id: this.data.idInfo.id
     }).get().then(res => {
       if (res.data.length > 0) {
         const _id = res.data[0]._id;
-        const fileID = res.data[0]._fileID;
+        const fileID = res.data[0].fileID;
         this.coverInfo(_id);
         this.deletePhoto(fileID);
       } else {
         this.saveInfo()
       }
-    });
-
-  },
-
-  //删除照片
-  deletePhoto: function(fileID) {
-    wx.cloud.deleteFile({
-      fileList: [fileList]
     })
   },
 
-  //覆盖信息
+  deletePhoto: function (fileID) {
+    wx.cloud.deleteFile({
+      fileList: [fileID]
+    })
+  },
+
   coverInfo: function (_id) {
     idCollection.doc(_id).set({
       data: this.data.idInfo
-    })
-    .then(this.showSuccess)
-    .catch(this.showFail)
+    }).then(this.showSuccess)
   },
 
-  //保存信息
-  saveInfo: function() {
+  saveInfo: function () {
     idCollection.add({
       data: this.data.idInfo
     })
-    .then(this.showSuccess)
-    .catch(this.showFail)
+      .then(this.showSuccess)
+      .catch(this.showFail)
   },
 
-  showSuccess: function () { 
+  showSuccess: function () {
     wx.showToast({
-      title: '信息保存成功',
+      title: "信息保存成功"
     })
   },
 
@@ -174,7 +152,6 @@ Page({
     })
   },
 
-  //点击拷贝
   copyClick: function () {
     wx.setClipboardData({
       data: `${this.data.idInfo.id}`,
