@@ -18,9 +18,8 @@
             bindtap="copyClick"/>
 
 <block wx:if="{{idInfo}}">
-  <s-header title="身份证信息"/>
-  <view class="id-info">
-   <view>姓名: {{idInfo.name}}</view>
-   <image src="{{idInfo.fileID}}"/>
-  </view>
+  <s-header title="身份证信息">
+    <button size="mini" class="btn">按钮</button>
+  </s-header>
+  <s-card-info info="{{idInfo}}"/>
 </block>

@@ -6,7 +6,9 @@
     "components/s-header/s-header",
     "components/s-card-item/s-card-item",
     "pages/home/childCpns/s-card-category/s-card-category",
-    "components/s-tool-bar/s-tool-bar"
+    "components/s-tool-bar/s-tool-bar",
+    "pages/cardlist/cardlist",
+    "components/s-card-info/s-card-info"
   ],
   "window": {
     "backgroundColor": "#FFF",
@@ -17,7 +19,8 @@
   },
   "usingComponents": {
     "s-header": "/components/s-header/s-header",
-    "s-tool-bar": "/components/s-tool-bar/s-tool-bar"
+    "s-tool-bar": "/components/s-tool-bar/s-tool-bar",
+    "s-card-info": "/components/s-card-info/s-card-info"
   },
   "tabBar": {
     "list": [

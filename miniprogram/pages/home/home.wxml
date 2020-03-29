@@ -1,6 +1,8 @@
 <!--miniprogram/pages/home/home.wxml-->
 <!-- 卡片头部 -->
-<s-header title="我的卡证"></s-header>
+<s-header title="我的卡证">
+  <text>hh</text>
+</s-header>
 
 <!-- 卡片类型列表 -->
 <s-card-category categories="{{categories}}"/>

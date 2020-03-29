@@ -4,14 +4,6 @@
   margin-top: 50rpx !important;
 }
 
-.id-info
-{
-  padding: 20rpx;
-  font-size: 30rpx;
-}
-
-.id-info image
-{
-  margin-top: 60rpx;
-  width: 100%;
+.btn {
+  vertical-align: middle;
 }

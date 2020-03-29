@@ -2,7 +2,9 @@
 
 <view class="card-category">
   <block wx:for="{{categories}}" wx:key="unique">
-    <s-card-item title="{{item.title}}" iconPath="{{item.icon}}"/>
+    <s-card-item title="{{item.title}}" 
+                 iconPath="{{item.icon}}"
+                 bindtap="itemClick"
+                 data-index="{{index}}"/>
   </block>
 </view>
-
