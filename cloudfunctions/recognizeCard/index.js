@@ -1,16 +1,36 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
-
+const { ImageClient } = require('image-node-sdk');
 cloud.init()
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  const wxContext = cloud.getWXContext()
+  // 1.取出小程序端传入的fileURL/type
+  const fileURL = event.fileURL;
+  const type = event.type;
 
-  return {
-    event,
-    openid: wxContext.OPENID,
-    appid: wxContext.APPID,
-    unionid: wxContext.UNIONID,
+  // 2.使用腾讯云AI功能进行识别(身份证验证)
+  let AppId = '1257440991'; // 腾讯云 AppId
+  let SecretId = 'AKIDRfcHm69m8DPPTDrujOozxhHbfYeU4Vdb'; // 腾讯云 SecretId
+  let SecretKey = 'KOMHwPc2GH3lQRCh6pMkvqc9SdBTaVRD'; // 腾讯云 SecretKey
+
+  let imgClient = new ImageClient({ AppId, SecretId, SecretKey });
+
+  if (type == 0) {
+    const result = await imgClient.ocrIdCard({
+      data: {
+        url_list: [fileURL]
+      }
+    })
+
+    return JSON.parse(result.body).result_list[0].data;
+  } else {
+    const result = await imgClient.ocrBankCard({
+      data: {
+        url: fileURL
+      }
+    })
+    return JSON.parse(result.body);
   }
+
 }
